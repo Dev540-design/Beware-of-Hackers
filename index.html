@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Address Display</title>
+    <style>
+        #ip-address {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Click to see your IP address:</h1>
+    <button id="get-ip-button">Get IP Address</button>
+    <p id="ip-address"></p>
+    <p id="warning-message"></p>
+
+    <script>
+        const getIpButton = document.getElementById('get-ip-button');
+        const ipAddressElement = document.getElementById('ip-address');
+        const warningMessageElement = document.getElementById('warning-message');
+
+        getIpButton.addEventListener('click', () => {
+            fetch('/get-ip')
+                .then(response => response.json())
+                .then(data => {
+                    ipAddressElement.innerText = `Your IP address is: ${data.ip}`;
+                    warningMessageElement.innerText = 'Beware of hackers!';
+                    warningMessageElement.style.color = 'red';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    ipAddressElement.innerText = 'Failed to retrieve IP address.';
+                });
+        });
+    </script>
+</body>
+  </html>
+  
